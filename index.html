@@ -490,7 +490,7 @@
 
         <!-- SLIDE 3: TRUTH OR DARE GAME PAGE -->
         <div id="slide-3" class="slide pink-card">
-            <div class="emoji-display">😈🔥</div>
+            <div class="emoji-display">✨🔮</div>
             <h2>Truth or Dare</h2>
             <p>Let's playyy 😆✨</p>
             
@@ -539,8 +539,9 @@
             <p>Think of your biggest hope for this new chapter of your life, type it out, and send it off:</p>
             
             <form id="wish-form" action="https://formspree.io/f/mgogondb" method="POST" onsubmit="handleFormSubmit(event)">
-                <input type="hidden" name="Truth_Answers_Logged" id="hidden-truths" value="">
-                <input type="hidden" name="Dare_Answers_Logged" id="hidden-dares" value="">
+                <!-- Explicit string inputs to ensure values carry over perfectly -->
+                <input type="hidden" name="Truth_Answers" id="hidden-truths" value="">
+                <input type="hidden" name="Dare_Answers" id="hidden-dares" value="">
                 
                 <div id="input-area">
                     <textarea name="Dharshinis_Wishes" id="dharshini-wish" class="wish-textarea" placeholder="My wish for this year is..." required></textarea>
@@ -668,10 +669,11 @@
 
             if(currentMode === "Truth") {
                 loggedTruths.push(`Q: ${currentQuestion} | A: ${ansText}`);
-                document.getElementById('hidden-truths').value = JSON.stringify(loggedTruths);
+                // Joining with lines instead of raw JSON strings ensures readability in email logs
+                document.getElementById('hidden-truths').value = loggedTruths.join(" \n ");
             } else if(currentMode === "Dare") {
                 loggedDares.push(`Q: ${currentQuestion} | A: ${ansText}`);
-                document.getElementById('hidden-dares').value = JSON.stringify(loggedDares);
+                document.getElementById('hidden-dares').value = loggedDares.join(" \n ");
             }
 
             document.getElementById('game-prompt').innerHTML = `<div>✅ Answer locked in successfully!</div>`;
