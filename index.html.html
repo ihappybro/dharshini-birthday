@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dharshini!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #1a0f13;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            margin: auto;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pink-card {
+            background: rgba(255, 182, 193, 0.05);
+            padding: 35px 25px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            text-align: center;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 20, 147, 0.4);
+            background: rgba(0, 0, 0, 0.5);
+            color: #ff69b4;
+            font-weight: bold;
+            outline: none;
+            margin-top: 20px;
+        }
+
+        .code-input:focus {
+            border-color: #ff1493;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+        }
+
+        .error-msg {
+            color: #ff4d79;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .emoji-display {
+            font-size: 5.5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.4));
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ffb6c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 25px;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.6);
+        }
+
+        .wish-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            color: #fff;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .wish-textarea:focus {
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
+
+        .wishes-saved-msg {
+            display: none;
+            color: #ffb6c1;
+            font-style: italic;
+            line-height: 1.6;
+            margin-top: 15px;
+            animation: popIn 0.5s ease forwards;
+        }
+
+        .sparkle {
+            position: fixed;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            z-index: -1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music Tag playing Justin Bieber's Baby -->
+    <audio id="bg-music" src="https://open.audio/api/v1/tracks/786414/stream" loop></audio>
+
+    <div class="container">
+
+        <!-- SLIDE 1: PASSCODE SCREEN -->
+        <div id="slide-1" class="slide pink-card active">
+            <h2 style="color: #ffb6c1; font-weight: 400; letter-spacing: 1px;">🔒 Enter Secret Code</h2>
+            <input type="password" id="passcode" class="code-input" maxlength="4" placeholder="••••" oninput="checkPasscode()">
+            <p id="error" class="error-msg">Incorrect code! Try again 🤫</p>
+        </div>
+
+        <!-- SLIDE 2: FLOWER REVEAL PAGE -->
+        <div id="slide-2" class="slide pink-card">
+            <div class="emoji-display">🌸🌷💐</div>
+            <h1>Happy Birthday, Dharshini! ✨</h1>
+            <p style="color: #fce4ec; font-size: 1.05rem; line-height: 1.6;">
+                Wishing an absolutely incredible birthday to a one-of-a-kind friend! May your life always bloom beautifully.
+            </p>
+            <button class="next-btn" onclick="goToSlide(3)">Next ➡️</button>
+        </div>
+
+        <!-- SLIDE 3: CAKE & WISH INPUT PAGE -->
+        <div id="slide-3" class="slide pink-card">
+            <div class="emoji-display">🎂✨💖</div>
+            <h2 style="color: #ffb6c1; margin-bottom: 10px;">Make a Wish!</h2>
+            <p style="color: #fce4ec; font-size: 0.95rem;">Type your heart's desires for this year below:</p>
+            
+            <!-- Email Form Linked to Formspree -->
+            <form id="wish-form" action="https://formspree.io/f/mgogondb" method="POST" onsubmit="handleFormSubmit(event)">
+                <div id="input-area">
+                    <textarea name="Dharshinis_Wishes" id="dharshini-wish" class="wish-textarea" placeholder="Write your birthday wishes here... ✨" required></textarea>
+                    <button type="submit" class="next-btn">Save My Wishes ✨</button>
+                </div>
+            </form>
+
+            <div id="saved-area" class="wishes-saved-msg">
+                <p>✨ Your wishes have been sent straight to the universe! May every single one of them come true. Have a fantastic year ahead! 💕🌟</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkPasscode() {
+            const input = document.getElementById('passcode').value;
+            const errorElement = document.getElementById('error');
+            
+            if (input.length === 4) {
+                if (input === '1708') {
+                    const music = document.getElementById('bg-music');
+                    music.play().catch(e => console.log("Audio target background playing context activated", e));
+                    setInterval(createSparkle, 250);
+                    goToSlide(2);
+                } else {
+                    errorElement.style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('passcode').value = '';
+                    }, 500);
+                }
+            } else {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function goToSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            const nextSlide = document.getElementById('slide-' + slideNumber);
+            nextSlide.classList.add('active');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+            
+            const form = event.target;
+            const data = new FormData(form);
+            
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('input-area').style.display = 'none';
+                    document.getElementById('saved-area').style.display = 'block';
+                } else {
+                    alert("Oops! There was a slight problem saving your wish. Let's try again.");
+                }
+            }).catch(error => {
+                alert("Network error, try sending again! 💖");
+            });
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.innerHTML = ['🌸', '💖', '🎀', '✨', '💝', '🎈'][Math.floor(Math.random() * 6)];
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
